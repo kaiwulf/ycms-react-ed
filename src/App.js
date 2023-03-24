@@ -1,43 +1,41 @@
 import logo from './logo.svg';
 import './App.css';
-import marked from 'marked';
-import { sampleText } from './sampleText';
+import { marked } from 'marked';
+import { sampleText } from './sampleText.js';
+import { render } from '@testing-library/react';
 
-render(); {
+function Render() {
   return (
     <div className='container'>
       <div className='row'>
         <div className='col-sm-6'>
-          <textarea className='form-control' rows='35'/>
-            // will write text here
+          <textarea className='form-control'
+            onChange={this.handleChange}
+            value={this.state.text}
+            className='form-control'
+            rows='35'
+          />
         </div>
         <div className='col-sm-6'>
-          //will render text here
+          <div dangerouslySetInnerHTML={this.renderText(this.state.text)} />
         </div>
       </div>
     </div>
   );
 }
+export default render;
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-//}
+class App {
+  state = {
+    text: sampleText
+  }
 
-export default App;
+  handleChange = event => {
+    const text = event.target.value
+    this.setState({ text })
+  }
+  renderText = text => {
+    const __html = marked(text, {sanitize: true})
+    return { __html }
+  }
+}
