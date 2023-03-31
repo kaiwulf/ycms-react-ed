@@ -18,38 +18,25 @@ function RenderText({ markdown }) {
 }
 
 export default function Editor() {
-  const mkdStr = `
-# Markdown Editor
 
----
-
-**Hello world!!!**
-
-[![](https://avatars.githubusercontent.com/u/1680273?s=80&v=4)](https://avatars.githubusercontent.com/u/1680273?v=4)
-
-\`\`\`javascript
-import React from "react";
-import ReactDOM from "react-dom";
-import MEDitor from '@uiw/react-md-editor';
-
-\`\`\`
-`;
-const [value, setValue] = useState();
+const [postMD, setPostMD] = useState();
 
   return (
     <div className='container'>
       <div className='row'>
         <div className='col-sm-6'>
-        <textarea className='form-control'
-          onChange={setValue}
-          value={value}
-          rows='35'
-        />
-      </div>
-        <div className='col-sm-6'>
-           <RenderText />
+          <label>
+            <textarea className='form-control'
+              onChange={e => setPostMD(e.target.value)}
+              value={postMD}
+              rows='35'
+            />
+          </label>
         </div>
+      <div className='col-sm-6'>
+        <RenderText markdown={postMD} />
       </div>
     </div>
+  </div>
   );
 }
